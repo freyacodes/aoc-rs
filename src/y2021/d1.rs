@@ -1,18 +1,26 @@
 use crate::y2021::util;
 
-pub fn run() {
-    let mut part_one = 0;
-    let mut iter = util::get_input(1)
-        .into_iter()
-        .map(|s| s.parse::<u32>().unwrap());
+fn count_increases<'a>(iter: &mut impl Iterator<Item=&'a u64>) -> u64 {
     let mut last = iter.next().unwrap();
+    iter.fold(0, |acc, x| {
+        let b = x > last;
+        last = x;
+        if b { acc + 1 } else { acc }
+    })
+}
 
-    iter.for_each(|x| {
-        if x > last {
-            part_one += 1;
-        }
-        last = x
-    });
+pub fn run() {
+    let input: Vec<u64> = util::get_input(1)
+        .iter()
+        .map(|s| s.parse().unwrap())
+        .collect();
 
-    println!("Part one: {}", part_one) // 1476 too low
+    let part_one = count_increases(&mut input.iter());
+    let part_two = count_increases(&mut input.windows(3)
+        .map(|x| {
+            x.iter().sum::<u64>()
+        }).collect::<Vec<u64>>().iter());
+
+    println!("Part one: {}", part_one);
+    println!("Part two: {}", part_two);
 }
