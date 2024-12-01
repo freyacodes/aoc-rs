@@ -1,6 +1,7 @@
 mod y2021;
+mod y2024;
 mod util;
 
 fn main() {
-    y2021::d1::run()
+    y2024::d1::run()
 }

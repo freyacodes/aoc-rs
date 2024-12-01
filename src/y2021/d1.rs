@@ -10,7 +10,7 @@ fn count_increases<'a>(iter: &mut impl Iterator<Item=&'a u64>) -> u64 {
 }
 
 pub fn run() {
-    let input: Vec<u64> = util::get_input(1)
+    let input: Vec<u64> = util::get_input(2021, 1)
         .iter()
         .map(|s| s.parse().unwrap())
         .collect();
