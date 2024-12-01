@@ -1,4 +1,4 @@
-use crate::y2021::util;
+use crate::util;
 
 fn count_increases<'a>(iter: &mut impl Iterator<Item=&'a u64>) -> u64 {
     let mut last = iter.next().unwrap();
