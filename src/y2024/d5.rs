@@ -1,4 +1,3 @@
-use crate::util;
 use crate::util::get_input_string;
 
 fn parse() -> (Vec<(u32, u32)>, Vec<Vec<u32>>) {
@@ -27,7 +26,6 @@ fn get_relevant_rules(rules: &Vec<(u32, u32)>, update: &Vec<u32>) -> Vec<(u32, u
 
 fn follows_rules(rules: &Vec<(u32, u32)>, update: &Vec<u32>) -> bool {
     'rule_check: for (former, latter) in get_relevant_rules(rules, update).iter() {
-        let mut found_latter = false;
         for page in update.iter() {
             if page == former { continue 'rule_check; }
             if page == latter { return false; }

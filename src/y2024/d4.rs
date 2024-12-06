@@ -35,7 +35,7 @@ fn part_two() -> u32 {
                 }
             }
 
-            if (diagonals[0] == diagonals[2] || diagonals[1] == diagonals[3]) {
+            if diagonals[0] == diagonals[2] || diagonals[1] == diagonals[3] {
                 return;
             }
             matches += 1;
