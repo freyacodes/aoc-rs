@@ -1,5 +1,5 @@
-use std::{fs, ops};
 use std::path::Path;
+use std::fs;
 pub(crate) mod point2;
 
 pub fn get_input_string(year: u16, day: u8) -> String {

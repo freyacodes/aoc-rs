@@ -36,7 +36,7 @@ fn part_two() -> usize {
         for i in 0..vec.len() {
             let mut new_vec = vec.clone();
             new_vec.remove(i);
-            if (check_report(&new_vec)) { return true; }
+            if check_report(&new_vec) { return true; }
         }
         false
     }).count()
