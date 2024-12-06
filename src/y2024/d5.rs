@@ -30,7 +30,7 @@ fn follows_rules(rules: &Vec<(u32, u32)>, update: &Vec<u32>) -> bool {
         let mut found_latter = false;
         for page in update.iter() {
             if page == former { continue 'rule_check; }
-            if page == latter { return false }
+            if page == latter { return false; }
         }
     }
     true
@@ -45,8 +45,31 @@ fn part_one() -> u32 {
         .sum()
 }
 
+fn reorder_update(rules: &Vec<(u32, u32)>, update: &mut Vec<u32>) {
+    let relevant_rules = get_relevant_rules(rules, &update);
+
+    relevant_rules.iter().for_each(|(former, latter)| {
+        let index_former = update.iter().position(|p| *p == *former).unwrap();
+        let index_latter = update.iter().position(|p| *p == *latter).unwrap();
+        
+        if index_former < index_latter { return; }
+        let page = update.remove(index_former);
+        update.insert(index_latter, page);
+    });
+
+    if follows_rules(&relevant_rules, &update) { return; }
+    reorder_update(rules, update)
+}
+
 fn part_two() -> u32 {
-    0
+    let (rules, updates) = parse();
+
+    updates.into_iter()
+        .filter(|update| !follows_rules(&rules, update))
+        .map(|mut update| {
+            reorder_update(&rules, &mut update);
+            update[update.len() / 2]
+        }).sum()
 }
 
 pub fn run() {
