@@ -17,28 +17,30 @@ fn parse() -> (Vec<(u32, u32)>, Vec<Vec<u32>>) {
     (rules, updates)
 }
 
+fn get_relevant_rules(rules: &Vec<(u32, u32)>, update: &Vec<u32>) -> Vec<(u32, u32)> {
+    rules.iter()
+        .filter(|(former, latter)| {
+            update.contains(former) && update.contains(latter)
+        }).map(|r| *r)
+        .collect()
+}
+
+fn follows_rules(rules: &Vec<(u32, u32)>, update: &Vec<u32>) -> bool {
+    'rule_check: for (former, latter) in get_relevant_rules(rules, update).iter() {
+        let mut found_latter = false;
+        for page in update.iter() {
+            if page == former { continue 'rule_check; }
+            if page == latter { return false }
+        }
+    }
+    true
+}
+
 fn part_one() -> u32 {
     let (rules, updates) = parse();
 
     updates.iter()
-        .filter(|update| {
-            'rule_check: for (former, latter) in rules.iter() {
-                let mut found_latter = false;
-                for page in update.iter() {
-                    if page == former { 
-                        if found_latter {
-                            return false;
-                        } else {
-                            continue 'rule_check;
-                        }
-                    }
-                    if page == latter {
-                        found_latter = true;
-                    }
-                }
-            }
-            true
-        })
+        .filter(|update| follows_rules(&rules, update))
         .map(|update| update[update.len() / 2])
         .sum()
 }
