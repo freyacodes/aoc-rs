@@ -1,22 +1,8 @@
-use std::collections::HashMap;
-use crate::util::get_input;
-use crate::util::point2::{point, Point2, CARDINALS_AND_DIAGONALS};
-
-fn parse() -> HashMap<Point2, char> {
-    let mut map: HashMap<Point2, char> = HashMap::new();
-    get_input(2024, 4)
-        .into_iter()
-        .enumerate()
-        .for_each(|(y, line)| {
-            line.char_indices().for_each(|(x, c)| {
-                map.insert(point(x as i32, y as i32), c);
-            })
-        });
-    map
-}
+use crate::util::point2::{point, CARDINALS_AND_DIAGONALS};
+use crate::util::parse_char_map;
 
 fn part_one() -> u32 {
-    let map = parse();
+    let map = parse_char_map(2024, 4);
     let mut matches = 0;
     map.iter()
         .filter(|(_, &c)| c == 'X')
@@ -34,7 +20,7 @@ fn part_one() -> u32 {
 
 fn part_two() -> u32 {
     let directions = vec![point(-1, -1), point(1, -1), point(1, 1), point(-1, 1)];
-    let map = parse();
+    let map = parse_char_map(2024, 4);
     let mut matches = 0;
     map.iter()
         .filter(|(_, &c)| c == 'A')
@@ -48,7 +34,7 @@ fn part_two() -> u32 {
                     return;
                 }
             }
-            
+
             if (diagonals[0] == diagonals[2] || diagonals[1] == diagonals[3]) {
                 return;
             }
