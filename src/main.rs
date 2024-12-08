@@ -4,5 +4,5 @@ mod y2024;
 mod util;
 
 fn main() {
-    y2024::d7::run()
+    y2024::d8::run()
 }

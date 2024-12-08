@@ -1,0 +1,49 @@
+use std::collections::{HashMap, HashSet};
+use std::time::Instant;
+use crate::util::parse_char_map;
+use crate::util::point2::Point2;
+
+fn get_frequencies(map: &HashMap<Point2, char>) -> HashSet<char> {
+    map.iter().filter(|(_, &c)| c != '.')
+        .map(|(_, c)| *c)
+        .collect()
+}
+
+fn get_antinodes(map: &HashMap<Point2, char>, frequency: char) -> HashSet<Point2> {
+    let antennas = map.iter().filter(|(_, &c)| c == frequency)
+        .map(|(&p, _)| p)
+        .collect::<Vec<Point2>>();
+
+    let mut antinodes: HashSet<Point2> = HashSet::new();
+    antennas.iter().for_each(|antenna| {
+        antennas.iter().for_each(|other| {
+            if antenna == other { return; }
+            let diff = other - antenna;
+            let antinode = antenna + &(&diff * 2);
+            if map.contains_key(&antinode) { antinodes.insert(antinode); }
+        });
+    });
+
+    antinodes
+}
+
+fn part_one() -> u32 {
+    let map = parse_char_map(2024, 8);
+    let mut antinodes: HashSet<Point2> = HashSet::new();
+    get_frequencies(&map).into_iter().for_each(|frequency| {
+        get_antinodes(&map, frequency).into_iter().for_each(|a| { antinodes.insert(a); });
+    });
+
+    antinodes.len() as u32
+}
+
+fn part_two() -> u32 {
+    0
+}
+
+pub(crate) fn run() {
+    let timestamp_first = Instant::now();
+    println!("Part one: {} ({:?})", part_one(), timestamp_first.elapsed());
+    let timestamp_second = Instant::now();
+    println!("Part two: {} ({:?})", part_two(), timestamp_second.elapsed());
+}

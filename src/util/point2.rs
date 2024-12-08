@@ -1,4 +1,4 @@
-use std::ops::{Add, Mul, Rem};
+use std::ops::{Add, Mul, Sub};
 use lazy_static::lazy_static;
 
 pub fn point(x: i32, y: i32) -> Point2 {
@@ -32,10 +32,10 @@ impl Add<&Point2> for &Point2 {
     }
 }
 
-impl Rem<&Point2> for &Point2 {
+impl Sub<&Point2> for &Point2 {
     type Output = Point2;
 
-    fn rem(self, rhs: &Point2) -> Self::Output {
+    fn sub(self, rhs: &Point2) -> Self::Output {
         point(self.x - rhs.x, self.y - rhs.y)
     }
 }
