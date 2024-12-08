@@ -9,7 +9,7 @@ fn get_frequencies(map: &HashMap<Point2, char>) -> HashSet<char> {
         .collect()
 }
 
-fn get_antinodes(map: &HashMap<Point2, char>, frequency: char) -> HashSet<Point2> {
+fn get_antinodes(map: &HashMap<Point2, char>, frequency: char, harmonics: bool) -> HashSet<Point2> {
     let antennas = map.iter().filter(|(_, &c)| c == frequency)
         .map(|(&p, _)| p)
         .collect::<Vec<Point2>>();
@@ -19,19 +19,27 @@ fn get_antinodes(map: &HashMap<Point2, char>, frequency: char) -> HashSet<Point2
         antennas.iter().for_each(|other| {
             if antenna == other { return; }
             let diff = other - antenna;
-            let antinode = antenna + &(&diff * 2);
-            if map.contains_key(&antinode) { antinodes.insert(antinode); }
+            let mut factor = 2;
+            loop {
+                let antinode = antenna + &(&diff * factor);
+                if !map.contains_key(&antinode) { break; }
+                antinodes.insert(antinode);
+                if !harmonics { break; }
+                factor += 1
+            }
         });
+        
+        if harmonics { antinodes.insert(antenna.clone()); }
     });
 
     antinodes
 }
 
-fn part_one() -> u32 {
+fn solve(harmonics: bool) -> u32 {
     let map = parse_char_map(2024, 8);
     let mut antinodes: HashSet<Point2> = HashSet::new();
     get_frequencies(&map).into_iter().for_each(|frequency| {
-        get_antinodes(&map, frequency).into_iter().for_each(|a| { antinodes.insert(a); });
+        get_antinodes(&map, frequency, harmonics).into_iter().for_each(|a| { antinodes.insert(a); });
     });
 
     antinodes.len() as u32
@@ -43,7 +51,7 @@ fn part_two() -> u32 {
 
 pub(crate) fn run() {
     let timestamp_first = Instant::now();
-    println!("Part one: {} ({:?})", part_one(), timestamp_first.elapsed());
+    println!("Part one: {} ({:?})", solve(false), timestamp_first.elapsed());
     let timestamp_second = Instant::now();
-    println!("Part two: {} ({:?})", part_two(), timestamp_second.elapsed());
+    println!("Part two: {} ({:?})", solve(true), timestamp_second.elapsed());
 }
