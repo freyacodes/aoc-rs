@@ -1,5 +1,5 @@
-use crate::util::point2::{point, Point2, CARDINALS};
 use crate::util::parse_char_map;
+use crate::util::point2::{Point2, CARDINALS};
 use std::collections::{HashMap, HashSet};
 use std::time::Instant;
 
