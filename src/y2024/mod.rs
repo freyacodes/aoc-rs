@@ -7,3 +7,4 @@ pub(crate) mod d6;
 pub(crate) mod d7;
 pub(crate) mod d8;
 pub(crate) mod d9;
+pub(crate) mod d10;

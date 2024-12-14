@@ -6,7 +6,7 @@ pub fn point(x: i32, y: i32) -> Point2 {
 }
 
 lazy_static! {
-    pub static ref  CARDINALS_AND_DIAGONALS: Vec<Point2> = vec![
+    pub static ref CARDINALS_AND_DIAGONALS: Vec<Point2> = vec![
         point(1, 0),  // East
         point(1, -1), // Southeast
         point(0, -1), // South
@@ -15,6 +15,13 @@ lazy_static! {
         point(-1, 1), // Northwest
         point(0, 1),  // North
         point(1, 1),  // Northeast
+    ];
+    
+    pub static ref CARDINALS: Vec<Point2> = vec![
+        point(1, 0),  // East
+        point(0, -1), // South
+        point(-1, 0), // West
+        point(0, 1),  // North
     ];
 }
 
