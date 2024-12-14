@@ -16,25 +16,28 @@ fn search_slope(map: &HashMap<Point2, u8>, p: &Point2, next_height: u8) -> Vec<P
     }).collect()
 }
 
-fn get_slope_score(map: &HashMap<Point2, u8>, p: Point2) -> u32 {
-    let mut points = HashSet::new();
-    points.insert(p);
+fn get_slope_score(map: &HashMap<Point2, u8>, p: Point2, part_two: bool) -> u32 {
+    let mut points = vec![p];
     for next_height in 1..10 {
         points = points.into_iter().map(|p| search_slope(map, &p, next_height)).flatten().collect();
     }
-    points.len() as u32
+    if part_two {
+        points.len() as u32
+    } else {
+        points.iter().collect::<HashSet<&Point2>>().len() as u32
+    }
 }
 
-fn part_one() -> u32 {
+fn solve(part_two: bool) -> u32 {
     let map = parse();
 
     map.iter().filter(|(_, &h)| h == 0)
-        .map(|(p, _)| get_slope_score(&map, *p)).sum()
+        .map(|(p, _)| get_slope_score(&map, *p, part_two)).sum()
 }
 
 pub(crate) fn run() {
     let timestamp_first = Instant::now();
-    println!("Part one: {} ({:?})", part_one(), timestamp_first.elapsed());
-    //let timestamp_second = Instant::now();
-    //println!("Part two: {} ({:?})", part_two(), timestamp_second.elapsed());
+    println!("Part one: {} ({:?})", solve(false), timestamp_first.elapsed());
+    let timestamp_second = Instant::now();
+    println!("Part two: {} ({:?})", solve(true), timestamp_second.elapsed());
 }
