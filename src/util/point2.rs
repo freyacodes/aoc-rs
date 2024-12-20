@@ -1,4 +1,5 @@
 use std::ops::{Add, Mul, Sub};
+use std::vec::IntoIter;
 use lazy_static::lazy_static;
 
 pub fn point(x: i32, y: i32) -> Point2 {
@@ -29,6 +30,12 @@ lazy_static! {
 pub struct Point2 {
     x: i32,
     y: i32,
+}
+
+impl Point2 {
+    pub fn cardinals(&self) -> IntoIter<Point2> {
+        CARDINALS.iter().map(|c| c + self).collect::<Vec<Point2>>().into_iter()
+    }
 }
 
 impl Add<&Point2> for &Point2 {
