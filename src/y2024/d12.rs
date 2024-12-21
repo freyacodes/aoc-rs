@@ -1,9 +1,7 @@
-use std::cmp::min_by;
+use crate::util;
+use crate::util::point2::Point2;
 use std::collections::{HashMap, HashSet};
 use std::time::Instant;
-use log::error;
-use crate::util;
-use crate::util::point2::{point, Point2, CARDINALS};
 
 fn recurse_region(map: &HashMap<Point2, char>, set: &mut HashSet<Point2>, target_char: char, point: Point2) {
     if set.contains(&point) { return; }
