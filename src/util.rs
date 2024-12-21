@@ -3,7 +3,8 @@ use std::path::Path;
 use std::fs;
 use crate::util::point2::{point, Point2};
 
-pub(crate) mod point2;
+pub mod point2;
+pub mod point2l;
 
 pub fn get_input_string(year: u16, day: u8) -> String {
     fs::read_to_string(Path::new(&format!("input/{}/{}.txt", year, day))).unwrap()
