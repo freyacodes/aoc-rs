@@ -18,23 +18,36 @@ lazy_static! {
         point(1, 1),  // Northeast
     ];
     
+    pub static ref DIAGONALS: Vec<Point2> = vec![
+        point(1, -1), // Southeast
+        point(-1, -1),// Southwest
+        point(-1, 1), // Northwest
+        point(1, 1),  // Northeast
+    ];
+    
     pub static ref CARDINALS: Vec<Point2> = vec![
         point(1, 0),  // East
-        point(0, -1), // South
+        point(0, 1), // South
         point(-1, 0), // West
-        point(0, 1),  // North
+        point(0, -1),  // North
     ];
 }
 
 #[derive(Debug, Copy, Clone, Eq, Hash, PartialEq)]
 pub struct Point2 {
-    x: i32,
-    y: i32,
+    pub x: i32,
+    pub y: i32,
 }
 
 impl Point2 {
+    pub fn cardinals_and_diagonals(&self) -> IntoIter<Point2> {
+        CARDINALS_AND_DIAGONALS.iter().map(|c| c + self).collect::<Vec<Point2>>().into_iter()
+    }
     pub fn cardinals(&self) -> IntoIter<Point2> {
         CARDINALS.iter().map(|c| c + self).collect::<Vec<Point2>>().into_iter()
+    }
+    pub fn diagonals(&self) -> IntoIter<Point2> {
+        DIAGONALS.iter().map(|c| c + self).collect::<Vec<Point2>>().into_iter()
     }
 }
 
