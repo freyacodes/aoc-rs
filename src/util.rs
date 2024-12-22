@@ -14,9 +14,10 @@ pub fn get_input(year: u16, day: u8) -> Vec<String> {
     get_input_string(year, day).lines().map(|s| s.to_owned()).collect::<Vec<String>>()
 }
 
-pub fn parse_char_map(year: u16, day: u8) -> HashMap<Point2, char> {
+pub fn parse_char_map_from_string(string: String) -> HashMap<Point2, char> {
     let mut map: HashMap<Point2, char> = HashMap::new();
-    get_input(year, day).into_iter()
+    string.lines()
+        .into_iter()
         .enumerate()
         .for_each(|(y, line)| {
             line.char_indices().for_each(|(x, c)| {
@@ -24,4 +25,8 @@ pub fn parse_char_map(year: u16, day: u8) -> HashMap<Point2, char> {
             })
         });
     map
+}
+
+pub fn parse_char_map(year: u16, day: u8) -> HashMap<Point2, char> {
+    parse_char_map_from_string(get_input_string(year, day))
 }

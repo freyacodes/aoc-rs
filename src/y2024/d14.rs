@@ -1,9 +1,8 @@
-use std::thread::sleep;
-use std::time::{Duration, Instant};
-use regex::Regex;
 use crate::util::get_input_string;
-use crate::util::point2::Point2;
 use crate::util::point2::point;
+use crate::util::point2::Point2;
+use regex::Regex;
+use std::time::Instant;
 
 struct Robot {
     initial_position: Point2,

@@ -1,6 +1,4 @@
 use std::ops::{Add, Mul, Sub};
-use std::vec::IntoIter;
-use lazy_static::lazy_static;
 
 pub fn point(x: i64, y: i64) -> Point2L {
     Point2L { x, y }
